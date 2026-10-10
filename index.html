@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050807">
+<meta name="description" content="SHAHBAN AI — free online tools including QR code maker, password generator, word counter and stylish text generator.">
+<title>SHAHBAN AI | Free Online Tools</title>
+<style>
+:root{--bg:#050807;--panel:#0b1210;--green:#38ff8b;--muted:#a0b6aa;--line:#1b3828}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#102719 0%,#050807 48%);color:#ecfff3;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+header{padding:26px 16px 18px;text-align:center;border-bottom:1px solid var(--line)}
+.logo{font-size:clamp(27px,7vw,44px);font-weight:900;letter-spacing:1px;color:var(--green);text-shadow:0 0 18px #1cff7c45}
+.logo span{color:#fff}
+header p{color:var(--muted);margin:8px 0 0}
+.pill{display:inline-block;margin-top:13px;border:1px solid #286b45;color:var(--green);border-radius:99px;padding:5px 11px;font-size:12px}
+main{width:min(100% - 24px,960px);margin:24px auto 48px}
+.intro{text-align:center;margin:0 auto 22px;max-width:650px}
+.intro h1{font-size:clamp(23px,5vw,34px);margin:0 0 8px}
+.intro p{color:var(--muted);line-height:1.6;margin:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}
+.card{background:linear-gradient(145deg,#0d1711,#080d0b);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 10px 28px #0005}
+.card h2{font-size:18px;margin:0 0 6px;color:var(--green)}
+.card p{color:var(--muted);font-size:13px;line-height:1.5;margin:0 0 14px}
+label{display:block;color:#d8f7e3;font-size:13px;margin:11px 0 6px}
+input,textarea,select{width:100%;border:1px solid #244833;border-radius:10px;background:#050a07;color:#effff4;padding:12px;font:inherit;outline:none}
+textarea{resize:vertical;min-height:92px}
+input:focus,textarea:focus,select:focus{border-color:var(--green)}
+button{border:0;border-radius:10px;background:var(--green);color:#041108;font-weight:800;padding:11px 14px;cursor:pointer;margin:10px 6px 0 0}
+button.secondary{background:#15271c;color:#c9ffda;border:1px solid #28543a}
+.result{margin-top:12px;border:1px dashed #2b5a3c;border-radius:10px;padding:12px;min-height:44px;color:#d9ffe5;overflow-wrap:anywhere}
+.small{font-size:12px;color:var(--muted)}
+#qr img{display:block;max-width:100%;height:auto;margin:8px auto;background:#fff;padding:8px;border-radius:8px}
+footer{text-align:center;color:var(--muted);border-top:1px solid var(--line);padding:22px 14px;font-size:12px;line-height:1.7}
+a{color:var(--green)}
+.notice{margin-top:18px;padding:13px;border-left:3px solid var(--green);background:#0b1710;color:#c2d9ca;font-size:13px;line-height:1.6}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">SHAHBAN <span>AI</span></div>
+  <p>Smart tools. Simple clicks. Right in your browser.</p>
+  <div class="pill">● FREE ONLINE TOOLS</div>
+</header>
+<main>
+  <section class="intro">
+    <h1>&gt; Your Digital Tool Box_</h1>
+    <p>Useful everyday tools in one place. No account needed. Use the tools below directly on your phone.</p>
+  </section>
+  <section class="grid">
+    <article class="card">
+      <h2>01 / QR Code Generator</h2>
+      <p>Turn text or a website link into a QR code. Internet is needed to load the QR service.</p>
+      <label for="qrtext">Text or URL</label>
+      <input id="qrtext" type="text" placeholder="https://example.com">
+      <button onclick="makeQR()">Generate QR</button>
+      <button class="secondary" onclick="clearQR()">Clear</button>
+      <div class="result" id="qr" aria-live="polite">Your QR code will appear here.</div>
+    </article>
+    <article class="card">
+      <h2>02 / Password Generator</h2>
+      <p>Generate a random password locally in your browser. Nothing is sent to this page's server.</p>
+      <label for="plen">Password length</label>
+      <select id="plen"><option>12</option><option>16</option><option>20</option><option>24</option><option>32</option></select>
+      <button onclick="makePassword()">Generate Password</button>
+      <div class="result" id="password" aria-live="polite">Your password will appear here.</div>
+      <button class="secondary" onclick="copyText('password')">Copy password</button>
+      <p class="small">For important accounts, use a trusted password manager and never share passwords.</p>
+    </article>
+    <article class="card">
+      <h2>03 / Word Counter</h2>
+      <p>Count words, characters and sentences as you type.</p>
+      <label for="wordtext">Enter your text</label>
+      <textarea id="wordtext" placeholder="Type or paste your text here..."></textarea>
+      <div class="result" id="wordresult" aria-live="polite">Words: 0 · Characters: 0 · Sentences: 0</div>
+      <button class="secondary" onclick="document.getElementById('wordtext').value='';countWords()">Clear text</button>
+    </article>
+    <article class="card">
+      <h2>04 / Stylish Text</h2>
+      <p>Convert basic English letters into bold or script Unicode styles for bios and captions.</p>
+      <label for="styletext">Your text</label>
+      <input id="styletext" type="text" placeholder="Type something...">
+      <label for="stylekind">Style</label>
+      <select id="stylekind"><option value="bold">Bold</option><option value="script">Script</option><option value="mono">Monospace</option></select>
+      <button onclick="makeStylish()">Make stylish</button>
+      <div class="result" id="stylish" aria-live="polite">Your styled text will appear here.</div>
+      <button class="secondary" onclick="copyText('stylish')">Copy text</button>
+      <p class="small">Some apps or devices may not display every special character.</p>
+    </article>
+  </section>
+  <div class="notice"><strong>About SHAHBAN AI:</strong> Free browser-based utilities. This starter website does not collect accounts or store submitted text. The QR tool uses an external QR service, so do not enter private or sensitive information.</div>
+</main>
+<footer>
+  © <span id="year"></span> SHAHBAN AI Online Tools · Made for useful everyday tasks.<br>
+  Free hosting may be used; third-party services and monetization approval are separate.
+</footer>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+function makeQR(){
+  const value=document.getElementById('qrtext').value.trim();
+  const target=document.getElementById('qr');
+  if(!value){target.textContent='Please enter text or a URL first.';return;}
+  target.innerHTML='';
+  const img=document.createElement('img');
+  img.alt='Generated QR code';
+  img.width=220;img.height=220;
+  img.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent(value);
+  img.onerror=()=>{target.textContent='QR service could not load. Check your internet and try again.';};
+  target.appendChild(img);
+}
+function clearQR(){document.getElementById('qrtext').value='';document.getElementById('qr').textContent='Your QR code will appear here.';}
+
+function makePassword(){
+  const length=Number(document.getElementById('plen').value);
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%*-_';
+  const bytes=new Uint32Array(length);
+  if(!window.crypto || !window.crypto.getRandomValues){document.getElementById('password').textContent='Secure random generator is unavailable in this browser.';return;}
+  window.crypto.getRandomValues(bytes);
+  let result='';
+  for(let i=0;i<length;i++) result+=chars[bytes[i]%chars.length];
+  document.getElementById('password').textContent=result;
+}
+function countWords(){
+  const t=document.getElementById('wordtext').value;
+  const trimmed=t.trim();
+  const words=trimmed?trimmed.split(/\s+/u).length:0;
+  const sentences=(t.match(/[.!?؟]+(?=\s|$)/gu)||[]).length;
+  document.getElementById('wordresult').textContent='Words: '+words+' · Characters: '+t.length+' · Sentences: '+sentences;
+}
+document.getElementById('wordtext').addEventListener('input',countWords);
+
+function mapAlphabet(text, style){
+  const bases={bold:0x1D400,script:0x1D4D0,mono:0x1D670};
+  const lowerBases={bold:0x1D41A,script:0x1D4EA,mono:0x1D68A};
+  return Array.from(text).map(ch=>{
+    const n=ch.codePointAt(0);
+    if(n>=65&&n<=90)return String.fromCodePoint(bases[style]+n-65);
+    if(n>=97&&n<=122)return String.fromCodePoint(lowerBases[style]+n-97);
+    if(style==='bold'&&n>=48&&n<=57)return String.fromCodePoint(0x1D7CE+n-48);
+    return ch;
+  }).join('');
+}
+function makeStylish(){
+  const text=document.getElementById('styletext').value;
+  const style=document.getElementById('stylekind').value;
+  document.getElementById('stylish').textContent=text?mapAlphabet(text,style):'Please enter some text first.';
+}
+async function copyText(id){
+  const el=document.getElementById(id);
+  const value=el.innerText||el.textContent||'';
+  if(!value.trim()){return;}
+  try{await navigator.clipboard.writeText(value);alert('Copied!');}
+  catch(e){alert('Copy not available here. Press and hold the result to select and copy it.');}
+}
+</script>
+</body>
+</html>
